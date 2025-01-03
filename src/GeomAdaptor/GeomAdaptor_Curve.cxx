@@ -31,6 +31,7 @@
 #include <Geom_Circle.hxx>
 #include <Geom_Curve.hxx>
 #include <Geom_Ellipse.hxx>
+#include <Geom_TearDrop.hxx>
 #include <Geom_Hyperbola.hxx>
 #include <Geom_Line.hxx>
 #include <Geom_OffsetCurve.hxx>
@@ -40,6 +41,7 @@
 #include <GeomEvaluator_OffsetCurve.hxx>
 #include <gp_Circ.hxx>
 #include <gp_Elips.hxx>
+#include <gp_Teard.hxx>
 #include <gp_Hypr.hxx>
 #include <gp_Lin.hxx>
 #include <gp_Parab.hxx>
@@ -185,6 +187,9 @@ void GeomAdaptor_Curve::load(const Handle(Geom_Curve)& C,
     }
     else if ( TheType == STANDARD_TYPE(Geom_Ellipse)) {
       myTypeCurve = GeomAbs_Ellipse;
+    }
+    else if (TheType == STANDARD_TYPE(Geom_TearDrop)) {
+        myTypeCurve = GeomAbs_TearDropCurve;
     }
     else if ( TheType == STANDARD_TYPE(Geom_Parabola)) {
       myTypeCurve = GeomAbs_Parabola;
@@ -800,6 +805,18 @@ gp_Elips GeomAdaptor_Curve::Ellipse() const
   Standard_NoSuchObject_Raise_if (myTypeCurve != GeomAbs_Ellipse,
                                   "GeomAdaptor_Curve::Ellipse() - curve is not an Ellipse");
   return Handle(Geom_Ellipse)::DownCast (myCurve)->Elips();
+}
+
+//=======================================================================
+//function : TearDrop
+//purpose  : 
+//=======================================================================
+
+gp_Teard GeomAdaptor_Curve::TearDrop() const
+{
+    Standard_NoSuchObject_Raise_if(myTypeCurve != GeomAbs_TearDropCurve,
+        "GeomAdaptor_Curve::TearDrop() - curve is not an TearDrop");
+    return Handle(Geom_TearDrop)::DownCast(myCurve)->Elips();
 }
 
 //=======================================================================

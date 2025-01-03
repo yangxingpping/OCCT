@@ -21,6 +21,7 @@
 #include <Geom_OffsetCurve.hxx>
 #include <gp_Circ.hxx>
 #include <gp_Elips.hxx>
+#include <gp_Teard.hxx>
 #include <gp_Hypr.hxx>
 #include <gp_Lin.hxx>
 #include <gp_Parab.hxx>
@@ -275,6 +276,16 @@ gp_Elips Adaptor3d_Curve::Ellipse() const
   throw Standard_NotImplemented("Adaptor3d_Curve::Ellipse");
 }
 
+
+//=======================================================================
+//function : TearDrop
+//purpose  : 
+//=======================================================================
+
+gp_Teard Adaptor3d_Curve::TearDrop() const
+{
+	throw Standard_NotImplemented("Adaptor3d_Curve::TearDrop");
+}
 
 //=======================================================================
 //function : Hyperbola

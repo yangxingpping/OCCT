@@ -29,6 +29,7 @@ GeomAbs_Parabola,
 GeomAbs_BezierCurve,
 GeomAbs_BSplineCurve,
 GeomAbs_OffsetCurve,
+GeomAbs_TearDropCurve,
 GeomAbs_OtherCurve
 };
 

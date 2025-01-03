@@ -155,6 +155,18 @@ gp_Pnt ElCLib::CircleValue (const Standard_Real U,
 		A1 * XDir.Z() + A2 * YDir.Z() + PLoc.Z());
 }
 
+Standard_EXPORT gp_Pnt ElCLib::TearDropValue(const Standard_Real U, const gp_Ax2& Pos, const Standard_Real MajorRadius, const Standard_Real MinorRadius)
+{
+	const gp_XYZ& XDir = Pos.XDirection().XYZ();
+	const gp_XYZ& YDir = Pos.YDirection().XYZ();
+	const gp_XYZ& PLoc = Pos.Location().XYZ();
+	Standard_Real A1 = MajorRadius * cos(U);
+	Standard_Real A2 = MinorRadius * sin(U)*sin(U/2);
+	return gp_Pnt(A1 * XDir.X() + A2 * YDir.X() + PLoc.X(),
+		A1 * XDir.Y() + A2 * YDir.Y() + PLoc.Y(),
+		A1 * XDir.Z() + A2 * YDir.Z() + PLoc.Z());
+}
+
 //=======================================================================
 //function : EllipseValue
 //purpose  : 
@@ -287,6 +299,27 @@ void ElCLib::EllipseD1 (const Standard_Real U,
   V1.SetXYZ (Coord0);
 }
 
+Standard_EXPORT void ElCLib::TearDropD1(const Standard_Real U, const gp_Ax2& Pos, const Standard_Real MajorRadius, const Standard_Real MinorRadius, gp_Pnt& P, gp_Vec& V1)
+{
+	Standard_Real Xc = Cos(U);
+	Standard_Real Yc = Sin(U);
+	Standard_Real s1 = Sin(U);
+	Standard_Real s2 = Sin(U / 2);
+	Standard_Real c1 = Cos(U);
+	Standard_Real c2 = Cos(U / 2);
+	gp_XYZ Coord0;
+	gp_XYZ Coord1(Pos.XDirection().XYZ());
+	gp_XYZ Coord2(Pos.YDirection().XYZ());
+	//Point courant :
+	Coord0.SetLinearForm(c1 * MajorRadius, Coord1,
+		s1 * s2 * MinorRadius, Coord2,
+		Pos.Location().XYZ());
+	P.SetXYZ(Coord0);
+	//D1 :
+	Coord0.SetLinearForm(-s1 * MajorRadius, Coord1, (c1*s2+s1*c2/2) * MinorRadius, Coord2);
+	V1.SetXYZ(Coord0);
+}
+
 //=======================================================================
 //function : HyperbolaD1
 //purpose  : 
@@ -401,6 +434,30 @@ void ElCLib::EllipseD2 (const Standard_Real U,
   //D2 :
   Coord0.SetLinearForm (-Xc*MajorRadius, Coord1, -Yc*MinorRadius, Coord2);
   V2.SetXYZ (Coord0);
+}
+
+Standard_EXPORT void ElCLib::TearDropD2(const Standard_Real U, const gp_Ax2& Pos, const Standard_Real MajorRadius, const Standard_Real MinorRadius, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2)
+{
+	Standard_Real Xc = cos(U);
+	Standard_Real Yc = sin(U);
+	Standard_Real s1 = Sin(U);
+	Standard_Real s2 = Sin(U / 2);
+	Standard_Real c1 = Cos(U);
+	Standard_Real c2 = Cos(U / 2);
+	gp_XYZ Coord0;
+	gp_XYZ Coord1(Pos.XDirection().XYZ());
+	gp_XYZ Coord2(Pos.YDirection().XYZ());
+	//Point courant :
+	Coord0.SetLinearForm(c1 * MajorRadius, Coord1,
+		s1 * s2 * MinorRadius, Coord2,
+		Pos.Location().XYZ());
+	P.SetXYZ(Coord0);
+	//D1 :
+	Coord0.SetLinearForm(-s1 * MajorRadius, Coord1, (c1 * s2 + s1 * c2 / 2) * MinorRadius, Coord2);
+	V1.SetXYZ(Coord0);
+	//D2 :
+	Coord0.SetLinearForm(-c1 * MajorRadius, Coord1, (c1*c2-s1*s2*3/4) * MinorRadius, Coord2);
+	V2.SetXYZ(Coord0);
 }
 
 //=======================================================================

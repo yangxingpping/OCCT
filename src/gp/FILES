@@ -24,6 +24,8 @@ gp_Dir2d.cxx
 gp_Dir2d.hxx
 gp_Elips.cxx
 gp_Elips.hxx
+gp_Teard.cxx
+gp_Teard.hxx
 gp_Elips2d.cxx
 gp_Elips2d.hxx
 gp_EulerSequence.hxx

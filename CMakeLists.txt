@@ -723,6 +723,8 @@ endif()
 # the name of the project
 project (OCCT)
 
+#find_package(Freetype REQUIRED)
+
 # Get all used variables: OS_WITH_BIT, COMPILER
 OCCT_MAKE_OS_WITH_BITNESS()
 OCCT_MAKE_COMPILER_SHORT_NAME()

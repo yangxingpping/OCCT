@@ -36,6 +36,8 @@ Geom_ElementarySurface.cxx
 Geom_ElementarySurface.hxx
 Geom_Ellipse.cxx
 Geom_Ellipse.hxx
+Geom_TearDrop.cxx
+Geom_TearDrop.hxx
 Geom_Geometry.cxx
 Geom_Geometry.hxx
 Geom_HSequenceOfBSplineSurface.hxx

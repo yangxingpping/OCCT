@@ -19,6 +19,7 @@
 
 #include <gp_Circ.hxx>
 #include <gp_Elips.hxx>
+#include <gp_Teard.hxx>
 #include <gp_Hypr.hxx>
 #include <gp_Parab.hxx>
 #include <GeomAbs_Shape.hxx>
@@ -134,6 +135,8 @@ public:
   Standard_EXPORT virtual gp_Circ Circle() const;
   
   Standard_EXPORT virtual gp_Elips Ellipse() const;
+
+  Standard_EXPORT virtual gp_Teard TearDrop() const;
   
   Standard_EXPORT virtual gp_Hypr Hyperbola() const;
   

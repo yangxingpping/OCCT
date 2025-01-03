@@ -37,6 +37,7 @@
 #include <Geom_Line.hxx>
 #include <Geom_Circle.hxx>
 #include <Geom_Ellipse.hxx>
+#include <Geom_TearDrop.hxx>
 #include <Geom_Parabola.hxx>
 #include <Geom_Hyperbola.hxx>
 #include <Geom_BezierCurve.hxx>
@@ -250,6 +251,37 @@ static Standard_Integer anacurve (Draw_Interpretor& , Standard_Integer n, const 
     else
       return 1;
   }
+
+  else if (!strcmp(a[0], "teardrop")) {
+      if (n == 6)
+          result2d =
+          new Geom2d_Ellipse(gp_Ax22d(gp_Pnt2d(Draw::Atof(a[2]), Draw::Atof(a[3])),
+              gp_Dir2d(1, 0)),
+              Draw::Atof(a[4]), Draw::Atof(a[5]));
+      else if (n == 7)
+          result =
+          new Geom_TearDrop(gp_Ax2(gp_Pnt(Draw::Atof(a[2]), Draw::Atof(a[3]), Draw::Atof(a[4])),
+              gp_Dir(0, 0, 1)),
+              Draw::Atof(a[5]), Draw::Atof(a[6]));
+      else if (n == 8)
+          result2d =
+          new Geom2d_Ellipse(gp_Ax22d(gp_Pnt2d(Draw::Atof(a[2]), Draw::Atof(a[3])),
+              gp_Dir2d(Draw::Atof(a[4]), Draw::Atof(a[5]))),
+              Draw::Atof(a[6]), Draw::Atof(a[7]));
+      else if (n == 10)
+          result =
+          new Geom_TearDrop(gp_Ax2(gp_Pnt(Draw::Atof(a[2]), Draw::Atof(a[3]), Draw::Atof(a[4])),
+              gp_Dir(Draw::Atof(a[5]), Draw::Atof(a[6]), Draw::Atof(a[7]))),
+              Draw::Atof(a[8]), Draw::Atof(a[9]));
+      else if (n == 13)
+          result =
+          new Geom_TearDrop(gp_Ax2(gp_Pnt(Draw::Atof(a[2]), Draw::Atof(a[3]), Draw::Atof(a[4])),
+              gp_Dir(Draw::Atof(a[5]), Draw::Atof(a[6]), Draw::Atof(a[7])),
+              gp_Dir(Draw::Atof(a[8]), Draw::Atof(a[9]), Draw::Atof(a[10]))),
+              Draw::Atof(a[11]), Draw::Atof(a[12]));
+      else
+          return 1;
+          }
   
   else if (!strcmp(a[0],"hyperbola")) {
     if (n == 6)
@@ -2003,6 +2035,10 @@ void  GeomliteTest::CurveCommands(Draw_Interpretor& theCommands)
 		  "ellipse name x y [z [dx dy dz]] [ux uy [uz]] major minor",
 		  __FILE__,
 		  anacurve,g);
+  theCommands.Add("teardrop",
+      "teardrop name x y [z [dx dy dz]] [ux uy [uz]] a b",
+      __FILE__,
+      anacurve, g);
   theCommands.Add("parabola",
 		  "parabola name x y [z [dx dy dz]] [ux uy [uz]] focal",
 		  __FILE__,

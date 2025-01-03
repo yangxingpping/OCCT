@@ -225,8 +225,10 @@ public:
   
   Standard_EXPORT static gp_Pnt CircleValue (const Standard_Real U, const gp_Ax2& Pos, const Standard_Real Radius);
   
-  Standard_EXPORT static gp_Pnt EllipseValue (const Standard_Real U, const gp_Ax2& Pos, const Standard_Real MajorRadius, const Standard_Real MinorRadius);
+  Standard_EXPORT static gp_Pnt TearDropValue (const Standard_Real U, const gp_Ax2& Pos, const Standard_Real MajorRadius, const Standard_Real MinorRadius);
   
+  Standard_EXPORT static gp_Pnt EllipseValue(const Standard_Real U, const gp_Ax2& Pos, const Standard_Real MajorRadius, const Standard_Real MinorRadius);
+
   Standard_EXPORT static gp_Pnt HyperbolaValue (const Standard_Real U, const gp_Ax2& Pos, const Standard_Real MajorRadius, const Standard_Real MinorRadius);
   
   Standard_EXPORT static gp_Pnt ParabolaValue (const Standard_Real U, const gp_Ax2& Pos, const Standard_Real Focal);
@@ -236,6 +238,8 @@ public:
   Standard_EXPORT static void CircleD1 (const Standard_Real U, const gp_Ax2& Pos, const Standard_Real Radius, gp_Pnt& P, gp_Vec& V1);
   
   Standard_EXPORT static void EllipseD1 (const Standard_Real U, const gp_Ax2& Pos, const Standard_Real MajorRadius, const Standard_Real MinorRadius, gp_Pnt& P, gp_Vec& V1);
+
+  Standard_EXPORT static void TearDropD1(const Standard_Real U, const gp_Ax2& Pos, const Standard_Real MajorRadius, const Standard_Real MinorRadius, gp_Pnt& P, gp_Vec& V1);
   
   Standard_EXPORT static void HyperbolaD1 (const Standard_Real U, const gp_Ax2& Pos, const Standard_Real MajorRadius, const Standard_Real MinorRadius, gp_Pnt& P, gp_Vec& V1);
   
@@ -244,6 +248,8 @@ public:
   Standard_EXPORT static void CircleD2 (const Standard_Real U, const gp_Ax2& Pos, const Standard_Real Radius, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2);
   
   Standard_EXPORT static void EllipseD2 (const Standard_Real U, const gp_Ax2& Pos, const Standard_Real MajorRadius, const Standard_Real MinorRadius, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2);
+
+  Standard_EXPORT static void TearDropD2(const Standard_Real U, const gp_Ax2& Pos, const Standard_Real MajorRadius, const Standard_Real MinorRadius, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2);
   
   Standard_EXPORT static void HyperbolaD2 (const Standard_Real U, const gp_Ax2& Pos, const Standard_Real MajorRadius, const Standard_Real MinorRadius, gp_Pnt& P, gp_Vec& V1, gp_Vec& V2);
   

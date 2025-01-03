@@ -164,6 +164,8 @@ public:
   Standard_EXPORT gp_Circ Circle() const Standard_OVERRIDE;
   
   Standard_EXPORT gp_Elips Ellipse() const Standard_OVERRIDE;
+
+  Standard_EXPORT gp_Teard TearDrop() const Standard_OVERRIDE;
   
   Standard_EXPORT gp_Hypr Hyperbola() const Standard_OVERRIDE;
   

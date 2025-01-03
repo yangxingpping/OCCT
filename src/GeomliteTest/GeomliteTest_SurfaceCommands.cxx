@@ -70,6 +70,12 @@
 #include <Geom_Curve.hxx>
 #include <Message.hxx>
 
+#include <DBRep.hxx>
+#include <TopoDS_Shape.hxx>
+#include <TopoDS_Vertex.hxx>
+#include <TopoDS.hxx>
+#include <BRep_Tool.hxx>
+
 #include <stdio.h>
 #ifdef _WIN32
 Standard_IMPORT Draw_Viewer dout;
@@ -214,6 +220,108 @@ static Standard_Integer anasurface (Draw_Interpretor& ,
 
   DrawTrSurf::Set(a[1],result);
   return 0;
+}
+
+
+
+static Standard_Integer anasurface2(Draw_Interpretor& b,
+	Standard_Integer  n,
+	const char** a)
+{
+    using std::string;
+    using std::vector;
+
+    vector<string> datas;
+
+	if (n != 11 && n!=5) return 1;
+	datas.push_back("plane");
+	datas.push_back(a[1]);
+    if (n == 5)
+    {
+
+        Standard_SStream sss;
+        sss << "hello.world\n";
+        
+
+        TopoDS_Shape S1 = DBRep::Get(a[2]);
+        TopoDS_Shape S2 = DBRep::Get(a[3]);
+		TopoDS_Shape S3 = DBRep::Get(a[4]);
+		TopoDS_Vertex v11 = TopoDS::Vertex(S1);
+        TopoDS_Vertex v22 = TopoDS::Vertex(S2);
+        TopoDS_Vertex v33 = TopoDS::Vertex(S3);
+        
+        auto p1 = BRep_Tool::Pnt(v11);
+        auto p2 = BRep_Tool::Pnt(v22);
+        auto p3 = BRep_Tool::Pnt(v33);
+
+        sss << "p1.x=" << p1.X() << " p1.y=" << p1.Y() << " p1.z=" << p1.Z() << "\n";
+        sss << "p2.x=" << p2.X() << " p2.y=" << p2.Y() << " p2.z=" << p2.Z() << "\n";
+        sss << "p3.x=" << p3.X() << " p3.y=" << p3.Y() << " p3.z=" << p3.Z() << "\n";
+
+		gp_Vec pos1(p1.X(), p1.Y(), p1.Z());
+		gp_Vec pos2(p2.X(), p2.Y(), p2.Z());
+		gp_Vec pos3(p3.X(), p3.Y(), p3.Z());
+
+		gp_Vec vDir = pos2;
+		vDir.Subtract(pos1);
+		gp_Vec v2 = pos3;
+		v2.Subtract(pos1);
+		vDir.Cross(v2);
+
+		gp_Vec vX = pos3;
+		vX.Subtract(pos1);
+
+
+		datas.push_back(std::to_string(pos1.X()));
+		datas.push_back(std::to_string(pos1.Y()));
+		datas.push_back(std::to_string(pos1.Z()));
+
+		datas.push_back(std::to_string(vDir.X()));
+		datas.push_back(std::to_string(vDir.Y()));
+		datas.push_back(std::to_string(vDir.Z()));
+
+		datas.push_back(std::to_string(vX.X()));
+		datas.push_back(std::to_string(vX.Y()));
+		datas.push_back(std::to_string(vX.Z()));
+
+        b << sss;
+    }
+    else
+    {
+        gp_Vec pos1(Draw::Atof(a[2]), Draw::Atof(a[3]), Draw::Atof(a[4]));
+        gp_Vec pos2(Draw::Atof(a[5]), Draw::Atof(a[6]), Draw::Atof(a[7]));
+        gp_Vec pos3(Draw::Atof(a[8]), Draw::Atof(a[9]), Draw::Atof(a[10]));
+
+        gp_Vec vDir = pos2;
+        vDir.Subtract(pos1);
+        gp_Vec v2 = pos3;
+        v2.Subtract(pos1);
+        vDir.Cross(v2);
+
+        gp_Vec vX = pos3;
+        vX.Subtract(pos1);
+
+        
+        datas.push_back(std::to_string(pos1.X()));
+        datas.push_back(std::to_string(pos1.Y()));
+        datas.push_back(std::to_string(pos1.Z()));
+
+        datas.push_back(std::to_string(vDir.X()));
+        datas.push_back(std::to_string(vDir.Y()));
+        datas.push_back(std::to_string(vDir.Z()));
+
+        datas.push_back(std::to_string(vX.X()));
+        datas.push_back(std::to_string(vX.Y()));
+        datas.push_back(std::to_string(vX.Z()));
+    }
+
+    char* args[11];
+    for (size_t i = 0;i < datas.size();++i)
+    {
+		args[i] = const_cast<char*>(datas[i].c_str());
+    }
+    n = static_cast<int>(datas.size());
+    return anasurface(b, n, (const char**)(args));
 }
 
 
@@ -1720,6 +1828,11 @@ void  GeomliteTest::SurfaceCommands(Draw_Interpretor& theCommands)
 		  "plane name [x y z [dx dy dz [ux uy uz]]]",
 		  __FILE__,
 		  anasurface,g);
+
+  theCommands.Add("plane2",
+	  "plane2 name [x y z [dx dy dz [ux uy uz]]]",
+	  __FILE__,
+	  anasurface2, g);
 
   theCommands.Add("cone",
 		  "cone name [x y z [dx dy dz [ux uy uz]]] semi-angle radius",

@@ -31,6 +31,7 @@
 #include <gp_Circ.hxx>
 #include <gp_Circ2d.hxx>
 #include <gp_Elips.hxx>
+#include <gp_Teard.hxx>
 #include <gp_Elips2d.hxx>
 #include <gp_Hypr.hxx>
 #include <gp_Hypr2d.hxx>
